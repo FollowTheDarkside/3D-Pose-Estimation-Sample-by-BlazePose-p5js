@@ -4,7 +4,7 @@
 
 This is a sample with [BlazePose](https://google.github.io/mediapipe/solutions/pose.html) and [p5.js](https://p5js.org). You can try with web camera.
 <br><br>
-[Video](hoge) and [Demo](hoge).
+[Video](hoge) and [Demo](https://followthedarkside.github.io/3D-Pose-Estimation-Sample-by-BlazePose-p5js/).
 
 ## License
 MIT
