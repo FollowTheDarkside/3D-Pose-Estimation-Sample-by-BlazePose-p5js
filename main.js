@@ -18,6 +18,8 @@ let poses;
 
 let angle = 0.0;
 
+var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
+
 /* 
 =============
 Function
@@ -129,21 +131,29 @@ function drawPoseInfo() {
         angle+=0.01;
         for(var i=0; i<poses.length; i++){
             for(var j=0; j<poses[i].keypoints3D.length; j++){
-                if(poses[i].keypoints3D[j].score > 0.5){
+                if(poses[i].keypoints3D[j].score > 0.1){
                     let posX = -windowWidth/2.0 + (windowWidth - poses[i].keypoints[j].x*(windowWidth/capture.width));
                     let posY = -windowHeight/2.0 + (poses[i].keypoints[j].y*(windowHeight/capture.height));
+                    let score3D = poses[i].keypoints3D[j].score;
 
                     // Draw circle at keypoint position
                     noStroke();
-                    fill(255, 0, 0, 128);
-                    circle(posX, posY, 10);
+                    fill(255, 0, 0, 128*score3D);
+                    //circle(posX, posY, 10);
+                    arc(posX, posY, 30, 30, 0, 2*PI*score3D)
 
                     // Draw keypoint name
                     push();
                     translate(posX, posY);
-                    rotateZ(-PI/4.0);
-                    fill(255);
-                    text(String(j+1)+": "+poses[i].keypoints[j].name, 10, 0);
+                    //rotateZ(-PI/4.0);
+                    rotateZ(2*PI*score3D);
+                    fill(255, 255, 255, 200);
+                    textSize(20);
+                    let tmpText = String(j+1)+": "+poses[i].keypoints[j].name
+                    let textNum = Math.round(score3D*20);
+                    tmpText += Array.from(Array(textNum)).map(()=>chars[Math.floor(Math.random()*chars.length)]).join('')
+                    //text(String(j+1)+": "+poses[i].keypoints[j].name, 10, 0);
+                    text(tmpText, 10, 0);
                     pop();
 
                     let posX3D = 1.0-(poses[i].keypoints3D[j].x+1.0)/2.0;
